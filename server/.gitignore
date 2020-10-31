@@ -1,0 +1,12 @@
+# Node modules
+node_modules
+
+# Environment variables, never commit this file
+.env
+database.env
+
+# The sqlite file
+src/database/*.sqlite
+
+#public files
+public/uploads/*
