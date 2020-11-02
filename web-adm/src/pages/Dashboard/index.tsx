@@ -144,7 +144,7 @@ const Dashboard: React.FC<DispatchProps> = ({ logout }) => {
             <div className="right">
               <BarButton onClick={ () => {
                 logout();
-                history.push('/login');
+                history.push('/');
               }}>
                 <FiLogOut/>
               </BarButton>

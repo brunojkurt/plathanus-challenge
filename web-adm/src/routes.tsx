@@ -14,7 +14,7 @@ const Routes = ({ auth }: { auth: AuthData }) => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/login" exact component={ Login } />
+        <Route path="/" exact component={ Login } />
         <PrivateRoute path="/dashboard" component={ Dashboard } auth={auth}/>
         <Route path="*" component={ () => { return ( <h1>404 Not Found</h1> )}} />
       </Switch>
