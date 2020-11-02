@@ -8,33 +8,23 @@ import { MdError } from "react-icons/md";
 import api from '../../services/api';
 
 interface TImage {
-  name: string;
+  name?: string;
   url?: string;
 }
 
-interface TState {
-  image?: TImage;
-  text?: string;
-}
-
-const WelcomeContent: React.FC = () => {
-  const [ contentState, setContentState ] = useState<TState>({});
-  const [ uploadProgress, setUploadProgress ] = useState<number>(0);
+const BannerImage: React.FC = () => {
+  const [ state, setState ] = useState<TImage>();
+  const [ uploadProgress, setUploadProgress ] = useState(0);
   const [ uploadError, setUploadError ] = useState(false);
 
   useEffect(() => {
     async function fetchContent() {
-      const response = await api.get('/admin/welcome_content');
+      const response = await api.get('/admin/banner_image');
       const { data } = response;
       
-      setContentState(prevState => {
-        return {
-          ...prevState,
-          image: {
-            name: data.img_name,
-            url: data.img_url
-          }
-        }
+      setState({
+        name: data.filename,
+        url: data.path
       })
     }
 
@@ -49,7 +39,7 @@ const WelcomeContent: React.FC = () => {
 
     data.append("file", uploadedFile, uploadedFile.name);
 
-    await api.post('/admin/welcome_content/image/upload', data, {
+    await api.post('/admin/banner_image/upload', data, {
         onUploadProgress: e => {
           const progress = Math.floor((e.loaded * 100) / e.total);
 
@@ -58,14 +48,10 @@ const WelcomeContent: React.FC = () => {
       })
       .then(response => {
         const { data } = response;
-        setContentState(prevState => {
-          return {
-            ...prevState,
-            image: {
-              name: data.img_name,
-              url: data.img_url
-            }
-          }
+        console.log(data);
+        setState({
+          name: data.filename,
+          url: data.path
         })
       })
       .catch(() => {
@@ -78,7 +64,7 @@ const WelcomeContent: React.FC = () => {
     <Container size="md">
       <Paper shadow>
         <SectionTitle>
-          Alterar imagem
+          Alterar imagem banner
         </SectionTitle>
 
         <DropArea
@@ -102,13 +88,15 @@ const WelcomeContent: React.FC = () => {
           )}
         </FeedbackArea>
 
-        { (contentState.image && contentState.image.url) && (
+        { state?.url ? (
           <Preview 
-            src={ contentState.image.url }/>
+            src={ state.url }/>
+        ) : (
+          <span>Nenhuma imagem adicionada.</span>
         )}
       </Paper>
     </Container>
   );
 }
 
-export default WelcomeContent;
+export default BannerImage;

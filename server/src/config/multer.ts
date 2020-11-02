@@ -10,7 +10,7 @@ const multerConfig = {
     },
     filename: function(req, file, cb) {
       const randomString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      const fileName = `${randomString}_${Date.now()}_${file.originalname}`;
+      const fileName = `${randomString}_${Date.now()}`;
       cb(null, fileName);
     }
   }),

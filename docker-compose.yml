@@ -34,6 +34,19 @@ services:
       - "3001:3000"
     environment: 
       REACT_APP_API_URL: http://localhost:3333
+      REACT_APP_PUBLIC_URL: http://localhost:3001
+  web:
+    stdin_open: true
+    build: 
+      context: ./web
+    volumes:
+      - /app/node_modules
+      - ./web:/usr/app
+    ports:
+      - "3000:3000"
+    environment: 
+      REACT_APP_API_URL: http://localhost:3333
+      REACT_APP_PUBLIC_URL: http://localhost:3000
   db:
     image: postgres:alpine
     ports:

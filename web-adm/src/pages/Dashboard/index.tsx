@@ -4,12 +4,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import { FiMenu, FiLogOut } from 'react-icons/fi';
-import { BiSlideshow } from 'react-icons/bi';
+import { BsCardImage } from 'react-icons/bs';
+import { RiPagesLine } from 'react-icons/ri';
+import { BsTextareaT } from 'react-icons/bs';
 
 import { logout } from '../../store/actions/auth';
 import { Container, Menu, Content, Bar, DroppableItem, BarButton } from './styles';
 
-import WelcomeContent from '../WelcomeContent';
+import BannerImage from '../BannerImage';
+import BannerTitle from '../BannerTitle';
+import SectionTwo from '../SectionTwo';
+import SectionThree from '../SectionThree';
+import SectionFour from '../SectionFour';
 
 interface DispatchProps {
   logout(): void;
@@ -36,9 +42,36 @@ const Dashboard: React.FC<DispatchProps> = ({ logout }) => {
 
   const [ drawerList, setDrawerList ] = useState<TItems[]>([
     {
-      icon: <BiSlideshow/>,
-      label: 'Welcome Content',
-      route: '/dashboard/welcome_content'
+      icon: <RiPagesLine/>,
+      label: 'Conteúdo da página',
+      dropped: false,
+      actions: [
+        {
+          icon: <BsCardImage/>,
+          label: 'Imagem Banner',
+          route: '/dashboard/banner_image'
+        },
+        {
+          icon: <BsTextareaT/>,
+          label: 'Título Banner',
+          route: '/dashboard/banner_title'
+        },
+        {
+          icon: <BsTextareaT/>,
+          label: 'Texto "What we do?"',
+          route: '/dashboard/wwdo_text'
+        },
+        {
+          icon: <BsTextareaT/>,
+          label: 'Texto "Testimonial"',
+          route: '/dashboard/testimonial'
+        },
+        {
+          icon: <BsTextareaT/>,
+          label: 'Info "Contact us"',
+          route: '/dashboard/contactus'
+        }
+      ]
     }
   ])
 
@@ -119,7 +152,11 @@ const Dashboard: React.FC<DispatchProps> = ({ logout }) => {
           </Bar>
 
           <Switch>
-            <Route path="/dashboard/welcome_content" exact component={ WelcomeContent } />
+            <Route path="/dashboard/banner_image" exact component={ BannerImage } />
+            <Route path="/dashboard/banner_title" exact component={ BannerTitle } />
+            <Route path="/dashboard/wwdo_text" exact component={ SectionTwo } />
+            <Route path="/dashboard/testimonial" exact component={ SectionThree } />
+            <Route path="/dashboard/contactus" exact component={ SectionFour } />
           </Switch>
           
         </Content>
